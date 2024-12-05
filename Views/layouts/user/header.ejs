@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CyberCrate</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<style>
+    .header {
+        background-color: #1a0340;
+        padding: 20px 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .header__menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-right: 40px;
+    }
+
+    .logo img {
+        height: 50px;
+        width: auto;
+    }
+
+    .logo-text {
+        color: #f8f5f5;
+        font-size: 24px;
+        font-weight: bold;
+        margin-left: 10px;
+        text-transform: uppercase;
+        opacity: 1;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-grow: 1;
+        justify-content: center;
+    }
+
+    .header .nav-links li a {
+        color: #f8f5f5 !important;
+        text-decoration: none;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: 500;
+        padding: 5px 10px;
+        transition: color 0.3s ease;
+        opacity: 1;
+    }
+
+    .header .nav-links li.active a {
+        color: #ff0844 !important;
+        border-bottom: 2px solid #ff0844;
+    }
+
+    .header .nav-links li a:hover {
+        color: #ff0844 !important;
+    }
+
+    .header__right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .header .header__right a {
+        color: #f8f5f5 !important;
+        text-decoration: none;
+        font-size: 20px;
+        opacity: 1;
+    }
+
+    .header .header__right a:hover {
+        color: #ff0844 !important;
+    }
+
+    .cart-icon {
+        position: relative;
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: #ff0844;
+        color: #f8f5f5;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 50%;
+        opacity: 1;
+    }
+
+    .user-dropdown {
+        position: relative;
+    }
+
+    .user-profile-trigger {
+        cursor: pointer;
+        padding: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .user-profile-trigger:hover {
+        color: #ff0844;
+    }
+
+    .header .user-profile-icon {
+        color: #f8f5f5 !important;
+        font-size: 20px;
+        opacity: 1;
+    }
+
+    .header .user-dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background-color: #1a0340;
+        min-width: 200px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 4px;
+        margin-top: 10px;
+        border: 1px solid #2d0668;
+    }
+
+    .header .user-dropdown-content.show {
+        display: block;
+    }
+
+    .header .user-dropdown-content a {
+        color: #f8f5f5 !important;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        transition: all 0.2s ease;
+    }
+
+    .header .user-dropdown-content a i {
+        width: 16px;
+        text-align: center;
+    }
+
+    .header .user-dropdown-content a:hover {
+        background-color: #2d0668;
+        color: #ff0844 !important;
+        padding-left: 20px;
+    }
+
+    .header .user-dropdown-content .dropdown-divider {
+        height: 1px;
+        background-color: #2d0668;
+        margin: 8px 0;
+    }
+
+    /* Override any Bootstrap link colors */
+    .header a,
+    .header a:link,
+    .header a:visited {
+        color: #f8f5f5 !important;
+    }
+
+    .header a:hover,
+    .header a:active {
+        color: #ff0844 !important;
+    }
+</style>
+
+<body>
+    <div class="header__top">
+        <div class="header__top__info">
+            <a href="tel:+919048835352"><i class="fa fa-phone"></i> +91 9048835352</a>
+            <a href="mailto:cybercrate@gmail.com"><i class="fa fa-envelope"></i> cybercrate@gmail.com</a>
+        </div>
+    </div>
+    <header class="header">
+        <div class="container">
+            <div class="header__menu">
+                <a href="/" class="logo">
+                    <img src="/img/cyber.png" alt="CyberCrate">
+                    <span class="logo-text">CYBER CRATE</span>
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="/">HOME</a></li>
+                    <li><a href="/pc">PC</a></li>
+                    <li><a href="/laptops">LAPTOPS</a></li>
+                    <li><a href="/components">PC COMPONENTS</a></li>
+                    <li><a href="/peripherals">GAMING PERIPHERALS</a></li>
+                    <li><a href="/consoles">CONSOLES</a></li>
+                    <li><a href="/about">ABOUT US</a></li>
+                </ul>
+
+                <div class="header__right">
+                    <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
+                    <% if(locals.user) { %>
+                        <div class="user-dropdown">
+                            <div class="user-profile-trigger" onclick="toggleDropdown(this)">
+                                <i class="fa fa-user user-profile-icon"></i>
+                            </div>
+                            <div class="user-dropdown-content">
+                                <a href="/profile"><i class="fa fa-user"></i>My Profile</a>
+                                <a href="/orders"><i class="fa fa-shopping-bag"></i>My Orders</a>
+                                <a href="/wishlist"><i class="fa fa-heart"></i>Wishlist</a>
+                                <a href="/wallet"><i class="fa fa-wallet"></i>Wallet</a>
+                                <a href="/notifications"><i class="fa fa-bell"></i>Notifications</a>
+                                <a href="/settings"><i class="fa fa-cog"></i>Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="/help"><i class="fa fa-question-circle"></i>Help Center</a>
+                                <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="user-dropdown">
+                            <div class="user-profile-trigger" onclick="toggleDropdown(this)">
+                                <i class="fa fa-user user-profile-icon"></i>
+                            </div>
+                            <div class="user-dropdown-content">
+                                <a href="/auth"><i class="fa fa-sign-in"></i>Login</a>
+                                <a href="/auth"><i class="fa fa-user-plus"></i>Sign Up</a>
+                            </div>
+                        </div>
+                    <% } %>
+                    <a href="/wishlist"><i class="fa fa-heart"></i></a>
+                    <a href="/cart" class="cart-icon">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="sale-banner">
+        Republic Day Sale <span>Starts Tomorrow</span>
+    </div>
+    <script>
+        function toggleDropdown(element) {
+            // Stop event from bubbling up
+            event.stopPropagation();
+            
+            // Find the dropdown content
+            const dropdown = element.nextElementSibling;
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.user-dropdown-content').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdowns = document.querySelectorAll('.user-dropdown-content');
+            dropdowns.forEach(dropdown => {
+                if (!event.target.closest('.user-dropdown')) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
