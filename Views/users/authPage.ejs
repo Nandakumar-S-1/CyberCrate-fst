@@ -371,12 +371,14 @@
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
+                <span id="signup-password-error" class="error-message"></span>
                 <div class="input-container">
                     <input type="password" id="confirm-password" name="cPassword" class="input-field" placeholder="Confirm Password">
                     <span class="toggle-password" onclick="togglePasswordVisibility('confirm-password', this)">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
+                <span id="signup-cpassword-error" class="error-message"></span>
                 <% if(locals.message && message.length>0 && (!locals.activeForm || locals.activeForm === 'signup')){%>
                     <span class="alert alert-danger text-center" >
                         <%= message %>
@@ -402,12 +404,14 @@
                 <div class="input-container">
                     <input type="email" id="signin-email" name="email" class="input-field" placeholder="Email">
                 </div>
+                <span id="signin-email-error" class="error-message"></span>
                 <div class="input-container">
                     <input type="password" id="signin-password" name="password" class="input-field" placeholder="Password">
                     <span class="toggle-password" onclick="togglePasswordVisibility('signin-password', this)">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
+                <span id="signin-password-error" class="error-message"></span>
                 <% if(locals.message && message.length>0 && (!locals.activeForm || locals.activeForm === 'signin')){%>
                     <div class="alert alert-danger text-center" >
                         <%= message %>
@@ -450,17 +454,17 @@
                 element.innerHTML = '<i class="fas fa-eye"></i>';
             }
         }
-
+    
         function toggleForms() {
             document.getElementById('main').classList.toggle('right-panel-active');
         }
-
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            e.preventDefault();
+    
+        // Sign up form validation
+        document.getElementById('signup-form').addEventListener('submit', function (e) {
             let errors = 0;
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
             const password = document.getElementById('password').value;
             const cPassword = document.getElementById('confirm-password').value;
 
@@ -468,34 +472,108 @@
             document.getElementById('signup-fullname-error').innerText = '';
             document.getElementById('signup-email-error').innerText = '';
             document.getElementById('signup-phone-error').innerText = '';
+            document.getElementById('signup-password-error').innerText = '';
+            document.getElementById('signup-cpassword-error').innerText = '';
 
-            // Validate inputs
-            if (name === '') {
-                document.getElementById('signup-fullname-error').innerText = 'Full Name is required.';
+            // Validate Name: Only alphabets allowed
+            const namePattern = /^[A-Za-z\s]+$/;
+            if (!name) {
+                document.getElementById('signup-fullname-error').innerText = 'Name is required.';
+                errors++;
+            } else if (!namePattern.test(name)) {
+                document.getElementById('signup-fullname-error').innerText = 'Name should only contain letters and spaces.';
                 errors++;
             }
-            if (email === '') {
+
+            // Validate Email
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!email) {
                 document.getElementById('signup-email-error').innerText = 'Email is required.';
                 errors++;
-            }
-            if (phone === '') {
-                document.getElementById('signup-phone-error').innerText = 'Phone number is required.';
-                errors++;
-            }
-            if (password === '') {
-                document.getElementById('signup-password-error').innerText = 'Password is required.';
-                errors++;
-            }
-            if (password !== cPassword) {
-                document.getElementById('signup-password-error').innerText = 'Passwords do not match.';
+            } else if (!emailPattern.test(email)) {
+                document.getElementById('signup-email-error').innerText = 'Enter a valid email address.';
                 errors++;
             }
 
-            if (errors === 0) {
-                this.submit();
+            // Validate Phone: Exactly 10 digits
+            const phonePattern = /^\d{10}$/;
+            if (!phone) {
+                document.getElementById('signup-phone-error').innerText = 'Phone number is required.';
+                errors++;
+            } else if (!phonePattern.test(phone)) {
+                document.getElementById('signup-phone-error').innerText = 'Phone number must be 10 digits.';
+                errors++;
+            }
+
+            // Validate Password
+            if (!password) {
+                document.getElementById('signup-password-error').innerText = 'Password is required.';
+                errors++;
+            } else {
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumbers = /\d/.test(password);
+                const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+                const isLengthValid = password.length >= 8;
+
+                if (!(hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar && isLengthValid)) {
+                    let errorMsg = 'Password must contain:';
+                    if (!isLengthValid) errorMsg += ' at least 8 characters,';
+                    if (!hasUpperCase) errorMsg += ' an uppercase letter,';
+                    if (!hasLowerCase) errorMsg += ' a lowercase letter,';
+                    if (!hasNumbers) errorMsg += ' a number,';
+                    if (!hasSpecialChar) errorMsg += ' a special character,';
+                    document.getElementById('signup-password-error').innerText = errorMsg.slice(0, -1);
+                    errors++;
+                }
+            }
+
+            // Validate Confirm Password
+            if (!cPassword) {
+                document.getElementById('signup-cpassword-error').innerText = 'Please confirm your password.';
+                errors++;
+            } else if (password !== cPassword) {
+                document.getElementById('signup-cpassword-error').innerText = 'Passwords do not match.';
+                errors++;
+            }
+
+            if (errors > 0) {
+                e.preventDefault();
+            }
+        });
+
+        // Sign in form validation
+        document.getElementById('signin-form').addEventListener('submit', function (e) {
+            let errors = 0;
+            const email = document.getElementById('signin-email').value.trim();
+            const password = document.getElementById('signin-password').value;
+
+            // Clear previous error messages
+            document.getElementById('signin-email-error').innerText = '';
+            document.getElementById('signin-password-error').innerText = '';
+
+            // Validate Email
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!email) {
+                document.getElementById('signin-email-error').innerText = 'Email is required.';
+                errors++;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById('signin-email-error').innerText = 'Enter a valid email address.';
+                errors++;
+            }
+
+            // Validate Password
+            if (!password) {
+                document.getElementById('signin-password-error').innerText = 'Password is required.';
+                errors++;
+            }
+
+            if (errors > 0) {
+                e.preventDefault();
             }
         });
     </script>
+    
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     

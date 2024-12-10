@@ -1,0 +1,175 @@
+<%- include('../layouts/admin/header.ejs') %>
+<%- include('../layouts/admin/sidebar.ejs') %>
+
+<div class="order-container">
+    <div class="order-header">
+        <h2>Order List</h2>
+        <div class="filter-section">
+            <button class="filter-btn">
+                <i class="fas fa-filter"></i>
+                Filter By
+            </button>
+            <select class="date-select">
+                <option>14 Feb 2019</option>
+            </select>
+            <select class="order-type">
+                <option>Order Type</option>
+            </select>
+            <select class="order-status">
+                <option>Order Status</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="order-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>ADDRESS</th>
+                    <th>DATE</th>
+                    <th>TYPE</th>
+                    <th>STATUS</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% orders.forEach(order => { %>
+                    <tr>
+                        <td><%= order.orderId %></td>
+                        <td><%= order.customerName %></td>
+                        <td><%= order.address %></td>
+                        <td><%= new Date(order.date).toLocaleDateString() %></td>
+                        <td><%= order.productType %></td>
+                        <td>
+                            <span class="status-badge <%= order.status.toLowerCase() %>">
+                                <%= order.status %>
+                            </span>
+                        </td>
+                        <td>
+                            <button class="action-btn">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .order-container {
+        padding: 20px;
+        margin-left: 250px;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .filter-section {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .filter-btn, select {
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: white;
+        cursor: pointer;
+    }
+
+    .order-table {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .status-badge {
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9em;
+    }
+
+    .delivered {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .processing {
+        background: #e3f2fd;
+        color: #1565c0;
+    }
+
+    .cancelled {
+        background: #ffebee;
+        color: #c62828;
+    }
+
+    .action-btn {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .action-btn:hover {
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .order-container {
+            margin-left: 0;
+            padding: 10px;
+        }
+
+        .order-header {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .filter-section {
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .filter-btn, select {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .order-table {
+            overflow-x: auto;
+        }
+    }
+</style>
+
+<%- include('../layouts/admin/footer.ejs') %>

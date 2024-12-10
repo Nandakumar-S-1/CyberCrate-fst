@@ -7,14 +7,18 @@ const brandSchema=new Schema({
         type:String,
         required:true
     },
-    brandImage:{
-        type:[String],
+    image:{
+        type:String,
         required:true,
     },
     isBlocked:{
         type:Boolean,
         default:false
     },
+    isDeleted:{
+        type:Boolean,
+        default:false
+    },   
     createdAt:{
         type:Date,
         default:Date.now

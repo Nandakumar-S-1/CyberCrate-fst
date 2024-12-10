@@ -2,33 +2,48 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../Controllers/users/userController');
 const passport = require('passport');
-const { isLogin, isLogout } = require('../Middleware/auth');
+const {isLogAuth, checkBlockedStatus, checkUserStatus} = require('../Middleware/auth');
 
-// Protected route - requires authentication
-router.get('/', isLogin, userController.loadHome);
+// Apply checkBlockedStatus middleware to all routes
+router.use(checkBlockedStatus);
 
-// Authentication routes - only accessible when logged out
-router.get('/auth', isLogout, userController.loadAuth);  // This will load the page with both forms
-router.post('/signup', isLogout, userController.signup);  // Handle signup form submission
-router.post('/signin', isLogout, userController.signin);  // Handle signin form submission
+router.get('/', userController.loadHome);
 
-// OTP verification routes
+// Authentication routes
+router.get('/auth', isLogAuth, userController.loadAuth);  
+router.post('/signup', isLogAuth, userController.signup);  
+router.post('/signin', checkUserStatus, userController.signin);  
+
+router.get('/logout', userController.logout);
+
+// OTP  routes
+router.get('/check-session', (req, res) => {
+    if (!req.session.userOtp || !req.session.userData || !req.session.otpExpiry) {
+        return res.status(401).json({ message: 'Session expired' });
+    }
+    if (Date.now() > req.session.otpExpiry) {
+        return res.status(401).json({ message: 'Session expired' });
+    }
+    res.status(200).json({ message: 'Session valid' });
+});
 router.post('/verify-otp', userController.verifyOtp);
 router.post('/resend-otp', userController.resendOtp);
 
-// Google OAuth routes
+// Google Auth 
 router.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }));
 router.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/auth' }),
     (req, res) => {
-        // Set up user session after successful authentication
+        // Set user session after successfull authenticate
         req.session.user = req.user;
         res.redirect('/');
     }
 );
 
+// Profile route
+router.get('/profile', isLogAuth, userController.loadProfile);
 router.get('/PageNotFound', userController.PageNotFound);
 
 module.exports = router;

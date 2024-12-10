@@ -1,0 +1,227 @@
+<%- include('../layouts/admin/header.ejs') %>
+<%- include('../layouts/admin/sidebar.ejs', {currentPage: 'users'}) %>
+
+<div class="users-container">
+    <div class="users-header">
+        <h2>Users</h2>
+        <div class="filter-section">
+            <div class="filter-dropdown">
+                <button class="filter-btn">
+                    <i class="fas fa-filter"></i>
+                    Filter By
+                </button>
+                <select name="status" id="statusFilter">
+                    <option value="blocked">blocked</option>
+                    <option value="active">active</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="users-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(let i=0;i<data.length;i++){%>
+                <tr data-user-id="<%=data[i]._id%>">
+                    <td><%=i+1%></td>
+                    <td><%=data[i].name%></td>
+                    <td><%=data[i].email%></td>
+                    <td>
+                        <%if(!data[i].isBlocked){%>
+                            <button class="btn btn-outline-danger block-btn">
+                                Block
+                            </button>
+                        <%}else{%>
+                            <button class="btn btn-outline-success unblock-btn">
+                                Unblock
+                            </button>
+                        <%}%>
+                    </td>
+                    
+                </tr>
+                <%}%>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination-container mt-3">
+        <ul class="pagination justify-content-center">
+            <% for(let i=1;i<=totalPages;i++){%>
+                <li class="page-item <%=(currentPage===i) ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %>"><%=i %></a>
+                </li>
+            <%}%>
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle block buttons
+        document.querySelectorAll('.block-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const userId = this.closest('tr').getAttribute('data-user-id');
+                window.location.href = `/admin/blockCustomer?id=${userId}`;
+            });
+        });
+
+        // Handle unblock buttons
+        document.querySelectorAll('.unblock-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const userId = this.closest('tr').getAttribute('data-user-id');
+                window.location.href = `/admin/unBlockCustomer?id=${userId}`;
+            });
+        });
+    });
+</script>
+
+<style>
+    .users-container {
+        padding: 20px;
+        margin-left: 250px;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .users-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .users-header h2 {
+        color: #333;
+        font-size: 24px;
+    }
+
+    .filter-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .filter-dropdown {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .filter-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        background: none;
+        color: #666;
+        cursor: pointer;
+    }
+
+    select {
+        border: none;
+        outline: none;
+        padding: 5px;
+        color: #666;
+        cursor: pointer;
+    }
+
+    .users-table {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: #4070f4;
+        color: white;
+        padding: 15px;
+        text-align: left;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .block-btn, .unblock-btn {
+        padding: 5px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .block-btn {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+
+    .block-btn:hover {
+        color: #fff;
+        background-color: #dc3545;
+    }
+
+    .unblock-btn {
+        color: #28a745;
+        border: 1px solid #28a745;
+    }
+
+    .unblock-btn:hover {
+        color: #fff;
+        background-color: #28a745;
+    }
+
+    .btn-outline-danger:hover,
+    .btn-outline-success:hover {
+        color: #fff !important;
+    }
+
+    .btn-outline-danger {
+        color: #dc3545 !important;
+    }
+
+    .btn-outline-success {
+        color: #28a745 !important;
+    }
+
+    @media (max-width: 768px) {
+        .users-container {
+            margin-left: 0;
+            padding: 10px;
+        }
+
+        .users-header {
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .users-table {
+            overflow-x: auto;
+        }
+    }
+
+</style>
+
+
+<%- include('../layouts/admin/footer.ejs') %>

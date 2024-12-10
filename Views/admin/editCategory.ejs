@@ -1,0 +1,160 @@
+<%- include('../layouts/admin/header.ejs') %>
+<%- include('../layouts/admin/sidebar.ejs', {currentPage: 'categories'}) %>
+
+<div class="edit-category-container">
+    <div class="edit-category-header">
+        <h2>Edit Category</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form id="editCategoryForm" action="/admin/editCategory" method="POST">
+                <input type="hidden" name="categoryId" value="<%= category._id %>">
+                
+                <div class="mb-3">
+                    <label for="categoryName" class="form-label">Category Name</label>
+                    <input type="text" 
+                            class="form-control" 
+                            id="categoryName" 
+                            name="name" 
+                            value="<%= category.name %>"
+                            required>
+                    <div id="name-error" class="error-message text-danger" style="display: none;"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" 
+                            class="form-control" 
+                            id="description" 
+                            name="description" 
+                            value="<%= category.description %>"
+                            required>
+                    <div id="description-error" class="error-message text-danger" style="display: none;"></div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" 
+                                type="checkbox" 
+                                role="switch" 
+                                id="isListed" 
+                                name="isListed" 
+                                <%= category.isListed ? 'checked' : '' %>>
+                        <label class="form-check-label" for="isListed">List Category</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Update Category</button>
+                    <a href="/admin/categories" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .edit-category-container {
+        padding: 20px;
+        margin-left: 250px;
+        background: #f8f9fa;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .edit-category-header {
+        margin-bottom: 20px;
+    }
+
+    .edit-category-header h2 {
+        color: #333;
+        font-size: 24px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border: none;
+    }
+
+    .form-control {
+        border: 1px solid #dee2e6;
+        padding: 0.75rem;
+        border-radius: 5px;
+    }
+
+    .form-control:focus {
+        border-color: #4070f4;
+        box-shadow: 0 0 0 0.2rem rgba(64, 112, 244, 0.25);
+    }
+
+    .btn-primary {
+        background: #4070f4;
+        border: none;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .btn-primary:hover {
+        background: #2952c8;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-check-input:checked {
+        background-color: #4070f4;
+        border-color: #4070f4;
+    }
+</style>
+
+<script>
+    function clearErrorMessages() {
+        const errElements = document.getElementsByClassName('error-message');
+        Array.from(errElements).forEach(element => {
+            element.style.display = 'none';
+        });
+    }
+
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        clearErrorMessages();
+
+        const name = document.getElementById('categoryName').value.trim();
+        const description = document.getElementById('description').value.trim();
+        let isValid = true;
+
+        if (name === '') {
+            document.getElementById('name-error').textContent = 'Category name is required';
+            document.getElementById('name-error').style.display = 'block';
+            isValid = false;
+        }
+
+        if (description === '') {
+            document.getElementById('description-error').textContent = 'Description is required';
+            document.getElementById('description-error').style.display = 'block';
+            isValid = false;
+        }
+
+        if (isValid) {
+            event.target.submit();
+        }
+    }
+
+    document.getElementById('editCategoryForm').addEventListener('submit', handleFormSubmit);
+</script>
+
+<%- include('../layouts/admin/footer.ejs') %>

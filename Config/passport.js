@@ -42,12 +42,12 @@ async (accessToken, refreshToken, profile, done) => {
 }));
 
 passport.serializeUser((user, done) => {
-    console.log('Serializing user:', user.id);
+    // console.log('Serializing user:', user.id);
     done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    console.log('Deserializing user:', id);
+    // console.log('Deserializing user:', id);
     User.findById(id)
         .then(user => {
             console.log('User found in deserialize:', user ? user.email : 'not found');

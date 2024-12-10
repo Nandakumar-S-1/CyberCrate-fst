@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CyberCrate</title>
+    <link rel="shortcut icon" type="image/png" href="/public/img/cyber.png">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -15,7 +19,6 @@
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/nice-select.css" type="text/css">
@@ -25,285 +28,407 @@
 </head>
 
 <style>
+    /* Base Header Styles */
     .header {
-        background-color: #1a0340;
-        padding: 20px 0;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
+        background: #1a0340;
+        position: relative;
+        border-bottom: 1px solid #2d0668;
     }
 
-    .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 15px;
-    }
-
-    .header__menu {
+    .header__content {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
     }
 
+    /* Logo Styles */
     .logo {
         display: flex;
         align-items: center;
         text-decoration: none;
-        margin-right: 40px;
+        color: white;
+        gap: 10px;
     }
 
     .logo img {
-        height: 50px;
+        height: 40px;
         width: auto;
     }
 
-    .logo-text {
-        color: #f8f5f5;
+    .logo span {
         font-size: 24px;
         font-weight: bold;
-        margin-left: 10px;
-        text-transform: uppercase;
-        opacity: 1;
     }
 
-    .nav-links {
+    /* Navigation Menu */
+    .nav-menu {
         display: flex;
-        align-items: center;
         gap: 30px;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        flex-grow: 1;
-        justify-content: center;
+        align-items: center;
     }
 
-    .header .nav-links li a {
-        color: #f8f5f5 !important;
+    .nav-item {
+        position: relative;
+    }
+
+    .nav-link {
+        color: white;
         text-decoration: none;
         font-size: 16px;
         text-transform: uppercase;
-        font-weight: 500;
-        padding: 5px 10px;
-        transition: color 0.3s ease;
-        opacity: 1;
+        padding: 8px 0;
+        display: block;
+        transition: color 0.3s;
     }
 
-    .header .nav-links li.active a {
-        color: #ff0844 !important;
-        border-bottom: 2px solid #ff0844;
+    .nav-link:hover {
+        color: #ff0844;
     }
 
-    .header .nav-links li a:hover {
-        color: #ff0844 !important;
+    /* Dropdown Menus */
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #1a0340;
+        min-width: 200px;
+        border-radius: 4px;
+        padding: 8px 0;
+        display: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
     }
 
-    .header__right {
+    .nav-item:hover .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 20px;
+        display: block;
+        transition: all 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+        background: #2d0668;
+        color: #ff0844;
+    }
+
+    /* Mega Menu */
+    .mega-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #1a0340;
+        padding: 40px 0;
+        display: none;
+        z-index: 1000;
+        border-top: 1px solid #2d0668;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .nav-item:hover .mega-menu {
+        display: block;
+    }
+
+    .mega-menu-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .mega-menu-section h3 {
+        color: #ff0844;
+        margin-bottom: 20px;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .mega-menu-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .mega-menu-section a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+    .mega-menu-section a:hover {
+        color: #ff0844;
+    }
+
+    /* Header Icons */
+    .header__icons {
         display: flex;
         align-items: center;
         gap: 20px;
     }
 
-    .header .header__right a {
-        color: #f8f5f5 !important;
-        text-decoration: none;
+    .icon-link {
+        color: white;
         font-size: 20px;
-        opacity: 1;
-    }
-
-    .header .header__right a:hover {
-        color: #ff0844 !important;
-    }
-
-    .cart-icon {
+        text-decoration: none;
+        transition: color 0.3s;
         position: relative;
+    }
+
+    .icon-link:hover {
+        color: #ff0844;
     }
 
     .cart-count {
         position: absolute;
         top: -8px;
         right: -8px;
-        background-color: #ff0844;
-        color: #f8f5f5;
+        background: #ff0844;
+        color: white;
         font-size: 12px;
         padding: 2px 6px;
         border-radius: 50%;
-        opacity: 1;
     }
 
-    .user-dropdown {
+    /* Profile Dropdown specific styles */
+    .profile-dropdown {
         position: relative;
+        display: inline-block;
     }
 
-    .user-profile-trigger {
+    .profile-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
         cursor: pointer;
         padding: 5px;
-        transition: all 0.3s ease;
     }
 
-    .user-profile-trigger:hover {
+    .profile-btn:hover {
         color: #ff0844;
     }
 
-    .header .user-profile-icon {
-        color: #f8f5f5 !important;
-        font-size: 20px;
-        opacity: 1;
-    }
-
-    .header .user-dropdown-content {
+    .profile-menu {
         display: none;
         position: absolute;
         right: 0;
-        top: 100%;
         background-color: #1a0340;
-        min-width: 200px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        z-index: 1;
+        min-width: 220px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
         border-radius: 4px;
-        margin-top: 10px;
-        border: 1px solid #2d0668;
     }
 
-    .header .user-dropdown-content.show {
-        display: block;
-    }
-
-    .header .user-dropdown-content a {
-        color: #f8f5f5 !important;
-        padding: 10px 16px;
+    .profile-menu a {
+        color: white;
+        padding: 12px 20px;
         text-decoration: none;
         display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 14px;
-        transition: all 0.2s ease;
     }
 
-    .header .user-dropdown-content a i {
-        width: 16px;
+    .profile-menu a:hover {
+        background-color: #2d0668;
+        color: #ff0844;
+    }
+
+    .profile-menu i {
+        width: 20px;
         text-align: center;
     }
 
-    .header .user-dropdown-content a:hover {
-        background-color: #2d0668;
-        color: #ff0844 !important;
-        padding-left: 20px;
-    }
-
-    .header .user-dropdown-content .dropdown-divider {
+    .dropdown-divider {
         height: 1px;
-        background-color: #2d0668;
+        background: #2d0668;
         margin: 8px 0;
     }
 
-    /* Override any Bootstrap link colors */
-    .header a,
-    .header a:link,
-    .header a:visited {
-        color: #f8f5f5 !important;
-    }
-
-    .header a:hover,
-    .header a:active {
-        color: #ff0844 !important;
+    .show-menu {
+        display: block;
     }
 </style>
 
 <body>
-    <div class="header__top">
-        <div class="header__top__info">
-            <a href="tel:+919048835352"><i class="fa fa-phone"></i> +91 9048835352</a>
-            <a href="mailto:cybercrate@gmail.com"><i class="fa fa-envelope"></i> cybercrate@gmail.com</a>
-        </div>
+    <!-- Top Info Bar -->
+    <div class="top-info">
+        <a href="tel:+919048835352"><i class="fas fa-phone"></i> +91 9048835352</a>
+        <a href="mailto:cybercrate@gmail.com"><i class="fas fa-envelope"></i> cybercrate@gmail.com</a>
     </div>
+
+    <!-- Main Header -->
     <header class="header">
         <div class="container">
-            <div class="header__menu">
+            <div class="header__content">
+                <!-- Logo -->
                 <a href="/" class="logo">
                     <img src="/img/cyber.png" alt="CyberCrate">
-                    <span class="logo-text">CYBER CRATE</span>
+                    <span>CYBER CRATE</span>
                 </a>
 
-                <ul class="nav-links">
-                    <li><a href="/">HOME</a></li>
-                    <li><a href="/pc">PC</a></li>
-                    <li><a href="/laptops">LAPTOPS</a></li>
-                    <li><a href="/components">PC COMPONENTS</a></li>
-                    <li><a href="/peripherals">GAMING PERIPHERALS</a></li>
-                    <li><a href="/consoles">CONSOLES</a></li>
-                    <li><a href="/about">ABOUT US</a></li>
-                </ul>
+                <!-- Navigation -->
+                <nav class="nav-menu">
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">HOME</a>
+                        <div class="dropdown-menu">
+                            <a href="/">Home Page</a>
+                            <a href="/featured">Featured Products</a>
+                            <a href="/new-arrivals">New Arrivals</a>
+                            <a href="/deals">Today's Deals</a>
+                            <a href="/best-sellers">Best Sellers</a>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">PC</a>
+                        <div class="dropdown-menu">
+                            <a href="/pc/desktop">Desktop PC</a>
+                            <a href="/pc/workstation">Workstation</a>
+                            <a href="/pc/gaming">Gaming PC</a>
+                            <a href="/pc/custom">Custom Build</a>
+                        </div>
+                    </div>
 
-                <div class="header__right">
-                    <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
-                    <% if(locals.user) { %>
-                        <div class="user-dropdown">
-                            <div class="user-profile-trigger" onclick="toggleDropdown(this)">
-                                <i class="fa fa-user user-profile-icon"></i>
+                    <div class="nav-item">
+                        <a href="/laptops" class="nav-link">LAPTOPS</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">PC COMPONENTS</a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-content">
+                                <div class="mega-menu-section">
+                                    <h3>Components</h3>
+                                    <ul>
+                                        <li><a href="/components/processors">Processors</a></li>
+                                        <li><a href="/components/motherboards">Motherboards</a></li>
+                                        <li><a href="/components/graphics-cards">Graphics Cards</a></li>
+                                        <li><a href="/components/memory">Memory</a></li>
+                                        <li><a href="/components/storage">Storage</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-menu-section">
+                                    <h3>Cooling & Power</h3>
+                                    <ul>
+                                        <li><a href="/components/power-supply">Power Supply</a></li>
+                                        <li><a href="/components/cpu-coolers">CPU Coolers</a></li>
+                                        <li><a href="/components/case-fans">Case Fans</a></li>
+                                        <li><a href="/components/thermal-paste">Thermal Paste</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-menu-section">
+                                    <h3>Cases & Accessories</h3>
+                                    <ul>
+                                        <li><a href="/components/cases">PC Cases</a></li>
+                                        <li><a href="/components/rgb-lighting">RGB Lighting</a></li>
+                                        <li><a href="/components/cables">Cables & Adapters</a></li>
+                                        <li><a href="/components/tools">Tools</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-menu-section">
+                                    <h3>Featured Brands</h3>
+                                    <ul>
+                                        <li><a href="/brand/intel">Intel</a></li>
+                                        <li><a href="/brand/amd">AMD</a></li>
+                                        <li><a href="/brand/nvidia">NVIDIA</a></li>
+                                        <li><a href="/brand/corsair">Corsair</a></li>
+                                        <li><a href="/brand/asus">ASUS</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="user-dropdown-content">
-                                <a href="/profile"><i class="fa fa-user"></i>My Profile</a>
-                                <a href="/orders"><i class="fa fa-shopping-bag"></i>My Orders</a>
-                                <a href="/wishlist"><i class="fa fa-heart"></i>Wishlist</a>
-                                <a href="/wallet"><i class="fa fa-wallet"></i>Wallet</a>
-                                <a href="/notifications"><i class="fa fa-bell"></i>Notifications</a>
-                                <a href="/settings"><i class="fa fa-cog"></i>Settings</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">GAMING PERIPHERALS</a>
+                        <div class="dropdown-menu">
+                            <a href="/peripherals/mouse">Gaming Mouse</a>
+                            <a href="/peripherals/keyboard">Gaming Keyboard</a>
+                            <a href="/peripherals/headset">Gaming Headset</a>
+                            <a href="/peripherals/controller">Controllers</a>
+                            <a href="/peripherals/mousepad">Mousepads</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="/consoles" class="nav-link">CONSOLES</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="/about" class="nav-link">ABOUT US</a>
+                    </div>
+                </nav>
+
+                <!-- Right Icons -->
+                <div class="header__icons">
+                    <a href="/search" class="icon-link">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <% if(locals.user) { %>
+                        <div class="profile-dropdown">
+                            <button type="button" onclick="toggleProfileMenu(event)" class="profile-btn">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <div id="profileDropdown" class="profile-menu">
+                                <a href="/profile"><i class="fas fa-user-circle"></i> My Profile</a>
+                                <a href="/orders"><i class="fas fa-box"></i> My Orders</a>
+                                <a href="/wishlist"><i class="fas fa-heart"></i> My Wishlist</a>
+                                <a href="/wallet"><i class="fas fa-wallet"></i> My Wallet</a>
+                                <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="/help"><i class="fa fa-question-circle"></i>Help Center</a>
-                                <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+                                <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                             </div>
                         </div>
                     <% } else { %>
-                        <div class="user-dropdown">
-                            <div class="user-profile-trigger" onclick="toggleDropdown(this)">
-                                <i class="fa fa-user user-profile-icon"></i>
-                            </div>
-                            <div class="user-dropdown-content">
-                                <a href="/auth"><i class="fa fa-sign-in"></i>Login</a>
-                                <a href="/auth"><i class="fa fa-user-plus"></i>Sign Up</a>
-                            </div>
-                        </div>
+                        <a href="/auth" class="icon-link">
+                            <i class="fas fa-user"></i>
+                        </a>
                     <% } %>
-                    <a href="/wishlist"><i class="fa fa-heart"></i></a>
-                    <a href="/cart" class="cart-icon">
-                        <i class="fa fa-shopping-cart"></i>
+                    <a href="/wishlist" class="icon-link">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a href="/cart" class="icon-link">
+                        <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count">0</span>
                     </a>
                 </div>
             </div>
         </div>
+
+        <!-- Sale Banner -->
+        <div class="sale-banner">
+            Republic Day <span class="sale-text">Sale</span> Starts Tomorrow
+        </div>
     </header>
-    <div class="sale-banner">
-        Republic Day Sale <span>Starts Tomorrow</span>
-    </div>
+
     <script>
-        function toggleDropdown(element) {
-            // Stop event from bubbling up
-            event.stopPropagation();
-            
-            // Find the dropdown content
-            const dropdown = element.nextElementSibling;
-            
-            // Close all other dropdowns
-            document.querySelectorAll('.user-dropdown-content').forEach(d => {
-                if (d !== dropdown) {
-                    d.classList.remove('show');
-                }
-            });
-            
-            // Toggle current dropdown
-            dropdown.classList.toggle('show');
+        function toggleProfileMenu(event) {
+            event.preventDefault();
+            const menu = document.getElementById('profileDropdown');
+            menu.classList.toggle('show-menu');
         }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdowns = document.querySelectorAll('.user-dropdown-content');
-            dropdowns.forEach(dropdown => {
-                if (!event.target.closest('.user-dropdown')) {
-                    dropdown.classList.remove('show');
+        // Close menu when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-btn') && !event.target.matches('.fa-user')) {
+                const menu = document.getElementById('profileDropdown');
+                if (menu.classList.contains('show-menu')) {
+                    menu.classList.remove('show-menu');
                 }
-            });
-        });
+            }
+        }
     </script>
 </body>
