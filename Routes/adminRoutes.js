@@ -43,6 +43,6 @@ router.get('/restoreBrand', isAdminAuthenticated, brandController.restoreBrand);
 //productManagement routes
 router.get('/products',isAdminAuthenticated,productController.loadProducts);
 router.get('/addProducts',isAdminAuthenticated,productController.loadAddProduct);
-router.post('/addProducts',isAdminAuthenticated,upload.array('image'),productController.addNewProduct);
+router.post('/products',isAdminAuthenticated,upload.array('images',3),productController.addNewProduct);
 
 module.exports = router;

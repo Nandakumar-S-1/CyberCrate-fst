@@ -32,7 +32,7 @@ const loadBrands = async (req, res) => {
 
 const addNewBrand = async (req, res) => {
     try {
-        console.log(req.file);
+        // console.log(req.file);
 
         if (!req.file) {
             return res.status(400).json({ error: 'Brand image not found, Please upload an image' });
