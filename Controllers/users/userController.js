@@ -2,24 +2,81 @@ const User=require('../../Models/userModel')
 const env=require('dotenv').config();
 const nodeMailer=require('nodemailer')
 const bcrypt = require('bcrypt')
+const Category = require('../../Models/categoryModel');
+const Product  = require('../../Models/productModel');
 
 
+// const loadHome = async (req, res) => {
+//     try {
+//         const userId = req.session.user;
+//         const categories = await Category.find({ isListed: true });
+//         let productData = await Product.find({
+//             isBlocked: false,
+//             category: { $in: categories.map(category => category._id) },
+//             quantity: { $gt: 0 }
+//         });
 
-const loadHome = async (req,res) => {
+//         productData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+//         productData = productData.slice(0, 8);
+
+//         if (userId) {
+//             const userData = await User.findById(userId);
+//             if (userData) {
+//                 return res.render('users/homePage', { user: userData, products: productData });
+//             }
+//         }
+//         return res.render('users/homePage', { user: null, products: productData });
+//     } catch (error) {
+//         console.error('An error occurred while loading the home page:', error);
+//         return res.render('users/homePage', { user: null });
+//     }
+// };
+
+const loadHome = async (req, res) => {
     try {
         const userId = req.session.user;
-        if(userId){
+
+        const categories = await Category.find({ isListed: true });
+        let recentProducts = await Product.find({
+            isBlocked: false,
+            category: { $in: categories.map(category => category._id) },
+            quantity: { $gt: 0 }
+        });
+
+        recentProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        recentProducts = recentProducts.slice(0, 8);
+
+        const productName = 'Predator Galea 310 Gaming Headset'; 
+        const product = await Product.findOne({ productName: productName });
+
+        const topSellingProducts = await Product.find({
+            isBlocked: false,
+            quantity: { $gt: 0 }
+        }).sort({ quantity: 1 }).limit(3);
+
+        if (userId) {
             const userData = await User.findById(userId);
             if (userData) {
-                return res.render('users/homePage', { user: userData });
+                return res.render('users/homePage', { 
+                    user: userData, 
+                    products: recentProducts, 
+                    topSellingProducts,
+                    product
+                });
             }
         }
-        return res.render('users/homePage', { user: null });
+        return res.render('users/homePage', { 
+            user: null, 
+            products: recentProducts, 
+            topSellingProducts,
+            product
+        });
     } catch (error) {
-        console.error('An Error occurred while loading home page:', error);
-        return res.render('users/homePage', { user: null });
+        console.error('An error occurred while loading the home page:', error);
+        return res.render('users/homePage', { user: null, products: [], topSellingProducts: [] });
     }
-}
+};
 
 const loadAuth = async (req, res) => {
     try {
@@ -396,6 +453,9 @@ const PageNotFound = async (req, res) => {
     }
 };
 
+
+
+
 module.exports = {
     loadAuth,
     loadHome,
@@ -405,5 +465,6 @@ module.exports = {
     signin,
     loadProfile,
     PageNotFound,
-    logout
+    logout,
+
 }

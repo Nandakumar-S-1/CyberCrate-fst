@@ -1,6 +1,128 @@
 <%- include('../layouts/admin/header.ejs') %>
-<%- include('../layouts/admin/sidebar.ejs') %>
+<%- include('../layouts/admin/sidebar.ejs', {currentPage: 'banners'}) %>
 
+<div class="main-content">
+    <div class="container">
+        <h1 class="mb-4">Banner Management</h1>
 
+        <!-- Add New Banner Form -->
+        <form action="/admin/banners" method="post" enctype="multipart/form-data" class="mb-5">
+            <div class="form-group">
+                <label for="bannerImage">Upload New Banner</label>
+                <input type="file" name="image" id="bannerImage" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="bannerTitle">Title</label>
+                <input type="text" name="title" id="bannerTitle" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="bannerDescription">Description</label>
+                <textarea name="description" id="bannerDescription" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="bannerLink">Link</label>
+                <input type="url" name="link" id="bannerLink" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="bannerStartDate">Start Date</label>
+                <input type="date" name="startDate" id="bannerStartDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="bannerEndDate">End Date</label>
+                <input type="date" name="endDate" id="bannerEndDate" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Banner</button>
+        </form>
+
+        <!-- Banners List -->
+        <table class="table table-bordered banner-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% banners.forEach(banner => { %>
+                <tr>
+                    <td><img src="/img/banner/<%= banner.image %>" alt="<%= banner.title %>" class="banner-img"></td>
+                    <td><%= banner.title %></td>
+                    <td><%= banner.description %></td>
+                    <td><%= banner.isActive ? 'Active' : 'Inactive' %></td>
+                    <td>
+                        <form action="/admin/banners/<%= banner._id %>/toggle" method="post" class="d-inline">
+                            <button type="submit" class="btn <%= banner.isActive ? 'btn-warning' : 'btn-success' %> btn-sm">
+                                <%= banner.isActive ? 'Deactivate' : 'Activate' %>
+                            </button>
+                        </form>
+                        <form action="/admin/banners/<%= banner._id %>" method="post" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <%- include('../layouts/admin/footer.ejs') %>
+
+<style>
+    .main-content {
+        margin-left: 250px; /* Adjust based on the sidebar width */
+        padding: 20px;
+        background-color: #f5f5f5; /* Light background for main content */
+        min-height: 100vh;
+    }
+
+    .container {
+        margin-top: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner-table th, .banner-table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .banner-img {
+        width: 150px; /* Increased width for better visibility */
+        height: auto;
+    }
+
+    .form-control {
+        margin-bottom: 15px;
+    }
+
+    .btn-warning {
+        background-color: #f0ad4e;
+        border-color: #eea236;
+    }
+
+    .btn-warning:hover {
+        background-color: #ec971f;
+        border-color: #d58512;
+    }
+
+    .btn-success {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+    }
+
+    .btn-success:hover {
+        background-color: #449d44;
+        border-color: #398439;
+    }
+</style>
+
+<script src="/js/bootstrap.min.js"></script>

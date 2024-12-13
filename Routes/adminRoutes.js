@@ -6,6 +6,7 @@ const customerController = require('../Controllers/admin/customerController');
 const categoryController=require('../Controllers/admin/categoryController')
 const brandController=require('../Controllers/admin/brandController')
 const productController=require('../Controllers/admin/productController')
+const bannerController=require('../Controllers/admin/bannerController')
 
 const upload = require('../Helpers/multer');
 
@@ -44,5 +45,16 @@ router.get('/restoreBrand', isAdminAuthenticated, brandController.restoreBrand);
 router.get('/products',isAdminAuthenticated,productController.loadProducts);
 router.get('/addProducts',isAdminAuthenticated,productController.loadAddProduct);
 router.post('/products',isAdminAuthenticated,upload.array('images',3),productController.addNewProduct);
+router.patch('/blockProduct/:id',isAdminAuthenticated,productController.blockProduct);
+router.patch('/unBlockProduct/:id',isAdminAuthenticated,productController.unBlockProduct);
+router.get('/editProduct/:id',isAdminAuthenticated,productController.loadEditProduct)
+router.post('/editProduct/:id',isAdminAuthenticated,upload.array('images',3),productController.editProduct);
+router.get('/deleteSingleImage',isAdminAuthenticated,productController.deleteSingleImage);
+
+
+//bannerManagement routes
+router.get('/banners', isAdminAuthenticated, bannerController.loadBanners);
+router.post('/banners', isAdminAuthenticated, upload.single('image'), bannerController.addNewBanner);
+
 
 module.exports = router;

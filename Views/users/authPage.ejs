@@ -240,6 +240,17 @@
         .toggle-btn:hover {
             text-decoration: underline;
         }
+        .forgotPassword{
+
+            color: blueviolet;
+            text-decoration: none;
+        }
+        .forgotPassword:hover{
+            color:rgb(46, 46, 185);
+            text-decoration: underline;
+            
+        }
+
         @media (max-width: 768px) {
             .container {
                 min-height: 480px;
@@ -417,7 +428,7 @@
                         <%= message %>
                     </div>
                 <%}%>
-                <a href="#">Forgot your password?</a>
+                <a href="/users/forgotPassword" class="forgotPassword">Forgot your password?</a>
                 <button type="submit" class="btn btn-outline-danger">Sign In</button>
                 <div class="mobile-toggle">
                     <p>Don't have an account?</p>
@@ -475,7 +486,6 @@
             document.getElementById('signup-password-error').innerText = '';
             document.getElementById('signup-cpassword-error').innerText = '';
 
-            // Validate Name: Only alphabets allowed
             const namePattern = /^[A-Za-z\s]+$/;
             if (!name) {
                 document.getElementById('signup-fullname-error').innerText = 'Name is required.';
@@ -485,7 +495,6 @@
                 errors++;
             }
 
-            // Validate Email
             const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!email) {
                 document.getElementById('signup-email-error').innerText = 'Email is required.';
@@ -495,7 +504,6 @@
                 errors++;
             }
 
-            // Validate Phone: Exactly 10 digits
             const phonePattern = /^\d{10}$/;
             if (!phone) {
                 document.getElementById('signup-phone-error').innerText = 'Phone number is required.';
@@ -517,6 +525,7 @@
                 const isLengthValid = password.length >= 8;
 
                 if (!(hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar && isLengthValid)) {
+                    
                     let errorMsg = 'Password must contain:';
                     if (!isLengthValid) errorMsg += ' at least 8 characters,';
                     if (!hasUpperCase) errorMsg += ' an uppercase letter,';
@@ -528,7 +537,7 @@
                 }
             }
 
-            // Validate Confirm Password
+            // Validate confirm password
             if (!cPassword) {
                 document.getElementById('signup-cpassword-error').innerText = 'Please confirm your password.';
                 errors++;
@@ -548,11 +557,11 @@
             const email = document.getElementById('signin-email').value.trim();
             const password = document.getElementById('signin-password').value;
 
-            // Clear previous error messages
+            // Clear ll theprevious error messages
             document.getElementById('signin-email-error').innerText = '';
             document.getElementById('signin-password-error').innerText = '';
 
-            // Validate Email
+            //  Email validationss
             const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!email) {
                 document.getElementById('signin-email-error').innerText = 'Email is required.';
@@ -562,7 +571,7 @@
                 errors++;
             }
 
-            // Validate Password
+            // Validate [password
             if (!password) {
                 document.getElementById('signin-password-error').innerText = 'Password is required.';
                 errors++;

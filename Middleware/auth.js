@@ -5,20 +5,20 @@ const isLogAuth = async (req, res, next) => {
         if (req.session.user) {
             const user = await User.findById(req.session.user);
             if (!user || user.isBlocked) {
-                // If user is blocked or doesn't exist, destroy session
                 req.session.destroy((err) => {
                     if (err) {
-                        console.error('Error destroying session:', err);
+                        console.error("Error destroying session:", err);
                     }
                 });
-                return res.redirect('/auth');
+                return res.redirect("/auth");
             }
-            return res.redirect('/');
+            next();
+        } else {
+            next();
         }
-        next();
     } catch (error) {
-        console.error('Error in isLogAuth Middleware:', error);
-        res.status(500).send('Internal server error');
+        console.error("Error in isLogAuth Middleware:", error);
+        res.status(500).send("Internal server error");
     }
 };
 
@@ -27,7 +27,7 @@ const checkBlockedStatus = async (req, res, next) => {
         if (req.session.user) {
             const user = await User.findById(req.session.user);
             if (user && user.isBlocked) {
-                // If user is blocked, destroy their session
+                // If user is blocked, destroy his session
                 req.session.destroy((err) => {
                     if (err) {
                         console.error('Error destroying session:', err);
@@ -49,7 +49,7 @@ const checkUserStatus = async (req, res, next) => {
         if (!email) {
             return next();
         }
-        
+
         const user = await User.findOne({ email });
         if (user && user.isBlocked) {
             return res.render('users/authPage', {

@@ -81,7 +81,7 @@
 
     <!-- Sales Graph and Best Sellers -->
     <div class="dashboard-content">
-        <!-- <div class="sales-graph">
+        <div class="sales-graph">
             <div class="graph-header">
                 <h3>Sale Graph</h3>
                 <div class="graph-filters">
@@ -93,7 +93,7 @@
             <div class="graph-container">
                 <canvas id="salesChart"></canvas>
             </div>
-        </div> -->
+        </div>
 
         <div class="best-sellers">
             <div class="section-header">
@@ -101,19 +101,49 @@
                 <button class="more-btn"><i class="fas fa-ellipsis-v"></i></button>
             </div>
             <div class="product-list">
-                <div class="product-item">
-                    <img src="/images/products/razer-kraken.jpg" alt="Razer Kraken">
-                    <div class="product-info">
-                        <h4>Razer Kraken V3 HyperSense Wired USB Gaming</h4>
-                        <p class="sales">40 sales</p>
-                        <p class="price">₹4,19,320</p>
+                <% bestSellingProducts.forEach((product) => { %>
+                    <div class="product-item">
+                        <img src="/img/products/<%= product.productImage[0] %>" alt="<%= product.productName %>">
+                        <div class="product-info">
+                            <h4><%= product.productName %></h4>
+                            <p class="sales">Stock left: <%= product.quantity %></p>
+                            <p class="brand">₹<%= product.salePrice %></p>
+                        </div>
                     </div>
-                </div>
-                <!-- Add more product items -->
+                <% }); %>
             </div>
             <button class="report-btn">REPORT</button>
         </div>
+        
     </div>
+
+
+    <div class="new-customers">
+        <div class="section-header">
+            <h3>New Customers</h3>
+            <button class="more-btn"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% newCustomers.forEach((customer) => { %>
+                    <tr>
+                        <td><%= customer.name %></td>
+                        <td><%= customer.email %></td>
+                        <td><%= customer.createdOn ? customer.createdOn.toDateString() : 'N/A' %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    
+    
 
     <!-- Recent Orders -->
     <div class="recent-orders">
@@ -152,6 +182,7 @@
             </tbody>
         </table>
     </div>
+
 
     
 </div>
@@ -464,6 +495,89 @@
             padding: 10px;
         }
     }
+    /* Best Selling Products */
+.best-sellers {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.best-sellers .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.best-sellers .section-header h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.best-sellers .more-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.best-sellers .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.best-sellers .product-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.best-sellers .product-item:hover {
+    transform: scale(1.05);
+}
+
+.best-sellers .product-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.best-sellers .product-info {
+    flex: 1;
+}
+
+.best-sellers .product-info h4 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.best-sellers .product-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.best-sellers .report-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4070f4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.best-sellers .report-btn:hover {
+    background-color: #3057c1;
+}
+
 </style>
 
 

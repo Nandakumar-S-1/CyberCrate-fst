@@ -14,12 +14,12 @@ const userSchema = new Schema({
     phone: {
         type: String,
         required: false,
-        sparse:true,
-        default:null,
+        sparse: true,
+        default: null,
     },
-    googleId:{
-        type:String,
-        unique:true
+    googleId: {
+        type: String,
+        unique: true
     },
     password: {
         type: String,
@@ -56,6 +56,8 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     }
-});
+},
+    { timestamps: true }
+);
 
 module.exports = mongoose.model('User', userSchema);

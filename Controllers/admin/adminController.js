@@ -3,6 +3,7 @@ const Product = require('../../Models/productModel');
 const Order = require('../../Models/orderModel'); 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { create } = require('connect-mongo');
 
 
 const pageError = async (req,res) => {
@@ -73,8 +74,19 @@ const logout =async (req,res)=>{
 
 const loadDashboard = async (req,res) => {
     try {
+
+        const bestSellingProducts = await Product.find()
+                                .sort({ quantity: 1 })
+                                .limit(5);
+        const newCustomers = await User.find({ isAdmin: false })
+                                .sort({ createdOn: -1 })
+                                .limit(5);
+
+
         res.render('admin/adminDashboard', {
-            currentPage: 'dashboard'
+            currentPage: 'dashboard',
+            bestSellingProducts,
+            newCustomers
         });
     } catch (error) {
         res.redirect('/pageError')

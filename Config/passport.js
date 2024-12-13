@@ -50,7 +50,7 @@ passport.deserializeUser((id, done) => {
     // console.log('Deserializing user:', id);
     User.findById(id)
         .then(user => {
-            console.log('User found in deserialize:', user ? user.email : 'not found');
+            // console.log('User found in deserialize:', user ? user.email : 'not found');
             done(null, user);
         })
         .catch(err => {
